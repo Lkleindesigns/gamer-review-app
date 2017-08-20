@@ -3,7 +3,7 @@ const express    = require('express'),
       bodyParser = require('body-parser')
 
 var app = express()
-mongoose.connect('mongodb://localhost/gamer-reviews', {useMongoClient: true,});
+mongoose.connect('mongodb://localhost/gamer-reviews', {useMongoClient: true});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', "ejs")
 
