@@ -1,18 +1,20 @@
-const express    = require('express'),
-      mongoose   = require('mongoose'),
-      bodyParser = require('body-parser'),
-      Review     = require('./models/review'),
-      seedDB     = require('./seeds')
-      Game       = require('./models/game')
+require('./data/db.js')
 
-var app = express()
-mongoose.connect('mongodb://localhost/gamer-reviews', {useMongoClient: true});
-app.use(bodyParser.urlencoded({extended: true}));
-app.set('view engine', "ejs")
-app.use(express.static(__dirname + "/public"))
+const express    = require('express'),
+      app        = express(),
+      bodyParser = require('body-parser'),
+      seedDB     = require('./seeds')
+
+app.set('port', (process.env.PORT || 3000))
+
+// Seed the database
 seedDB()
 
+app.set('view engine', "ejs")
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.static(__dirname + "/public"))
 
+// OLD ROUTES \\
 app.get('/', (req, res) => {
   res.render('landing')
 })
@@ -89,6 +91,6 @@ app.post('/games/:id/reviews', (req, res) => {
   })
 })
 
-app.listen(3000, () => {
-  console.log('Server is running on port 3000')
+app.listen(app.get('port'), function() {
+    console.log('Node app is running on port', app.get('port'));
 })
