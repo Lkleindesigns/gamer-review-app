@@ -12,7 +12,7 @@ module.exports = {
         res.render('games/index', {games: allGames, currentUser: req.user})
       }
     })
-  }
+  },
 
   getById: function(req, res) {
     Game.findById(req.params.id).populate('reviews').exec(function(err, game) {
@@ -22,7 +22,7 @@ module.exports = {
         res.render('games/show', {game})
       }
     })
-  }
+  },
 
   addNewGame: function(req, res) {
     var name = req.body.name
@@ -37,15 +37,15 @@ module.exports = {
         res.redirect('/games')
       }
     })
-  }
+  },
 
   updateById: function(req, res) {
     // TODo
-  }
+  },
 
   deleteById: function(req, res) {
     // TODO
-  }
+  },
 
   // Views
   renderNew: function(req, res) {

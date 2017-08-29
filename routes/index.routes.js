@@ -2,7 +2,8 @@ var express = require('express')
 var router  = express.Router()
 
 // CONTROLLERS
-var indexController = require('../controllers/users.controllers.js')
+var indexController = require('../controllers/index.controller.js')
+var authMiddleware  = require('../middleware/authMiddleware')
 
 router
   .route('/')

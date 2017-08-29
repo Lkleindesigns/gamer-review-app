@@ -1,6 +1,5 @@
 var mongoose = require('mongoose')
 
-
 var User = require('../models/user.model')
 
 module.exports = {
@@ -15,7 +14,7 @@ module.exports = {
         res.redirect('/games')
       })
     })
-  }
+  },
 
   loginUser: function(req, res) {
     passport.authenticate('local',{
@@ -23,7 +22,7 @@ module.exports = {
     failureRedirect: '/login'
     }),function(req,res){
     }
-  }
+  },
 
   logoutUser: function(req, res) {
     req.logout()
@@ -32,26 +31,19 @@ module.exports = {
 }
 
 // AUTH ROUTES
-app.get('/register', (req, res) => {
-  res.render('register')
-})
+// app.get('/register', (req, res) => {
+//   res.render('register')
+// })
 
 
-// show login form
-app.get('/login', (req, res) => {
-  res.render('login')
-})
-// Handle login logic
-app.post('/login')
+// // show login form
+// app.get('/login', (req, res) => {
+//   res.render('login')
+// })
+// // Handle login logic
+// app.post('/login')
 
-//logout route
-app.get('/logout', (req, res) => {
+// //logout route
+// app.get('/logout', (req, res) => {
 
-})
-
-function isLoggedIn(req, res, next) {
-  if(req.isAuthenticated()) {
-    return next()
-  }
-  res.redirect('/login')
-}
+// })

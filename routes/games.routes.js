@@ -2,7 +2,8 @@ var express = require('express')
 var router  = express.Router()
 
 // CONTROLLERS
-var gamesController = require('../controllers/games.controllers.js')
+var gamesController = require('../controllers/games.controller')
+var authMiddleware  = require('../middleware/authMiddleware')
 
 router
   .route('/')

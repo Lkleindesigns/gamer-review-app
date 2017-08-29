@@ -6,12 +6,10 @@ const express    = require('express'),
       seedDB     = require('./data/seeds'),
       passport   = require('passport'),
       LocalStrategy = require('passport-local'),
-      User       = require('./models/user.model'),
-      Game       = require('./models/game.model'),
-      Review     = require('./models/review.model')
+      User       = require('./models/user.model')
 
 var game_routes   = require('./routes/games.routes'),
-    review_routes = require('./routes/review.routes'),
+    review_routes = require('./routes/reviews.routes'),
     index_routes    = require('./routes/index.routes')
 
 app.set('port', (process.env.PORT || 3000))
@@ -45,7 +43,11 @@ app.use((req, res, next) => {
 
 app.use(index_routes)
 app.use(review_routes)
-app.use(game_routes)
+app.use('/games', game_routes)
+
+app.get('/', (req,res) => {
+  res.render('landing')
+})
 
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));

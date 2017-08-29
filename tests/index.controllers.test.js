@@ -2,14 +2,14 @@ const expect  = require('expect'),
       request = require('supertest')
 
 const {app} = require('./../app.js'),
-      User  = require('./../models/user.model')
-      Game  = require('./../controllers/games.controllers')
-      Index  = require('./../controllers/index.controllers')
+      User  = require('./../models/user.model'),
+      Game  = require('./../controllers/games.controller'),
+      Index  = require('./../controllers/index.controller')
 
 const {users, populateUsers} = require('./seeds/seeds.js')
 
 beforeEach(populateUsers)
-
+console.log(users)
 
 describe('POST /register - createUser', () => {
   it('should create new user', (done) => {
