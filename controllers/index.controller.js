@@ -1,4 +1,5 @@
 var mongoose = require('mongoose')
+var passport = require('passport')
 
 var User = require('../models/user.model')
 
@@ -16,6 +17,7 @@ module.exports = {
     })
   },
 
+// ====== Not working properly ======
   loginUser: function(req, res) {
     passport.authenticate('local',{
     successRedirect: '/games',
@@ -23,10 +25,23 @@ module.exports = {
     }),function(req,res){
     }
   },
+  //===== Not working properly =======
 
   logoutUser: function(req, res) {
     req.logout()
     res.redirect('/games')
+  },
+  // NOT SURE IF THIS IS RIGHT
+  landing: function(req, res) {
+    res.render('landing')
+  },
+
+  login: function(req, res) {
+    res.render('login')
+  },
+
+  register: (req, res) => {
+    res.render('register')
   }
 }
 

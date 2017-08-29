@@ -7,17 +7,17 @@ var authMiddleware  = require('../middleware/authMiddleware')
 
 router
   .route('/')
-    .get()
+    .get(indexController.landing)
 
 router
-  .route('/signup')
-    .get()
+  .route('/register')
+    .get(indexController.register)
     .post(indexController.createUser)
 
 router
   .route('/login')
-    .get()
-    .post()
+    .get(indexController.login)
+    .post(authMiddleware.isLoggedIn, indexController.loginUser)
 
 router
   .route('/logout')

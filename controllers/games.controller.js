@@ -15,6 +15,7 @@ module.exports = {
   },
 
   getById: function(req, res) {
+    console.log(req.params.id)
     Game.findById(req.params.id).populate('reviews').exec(function(err, game) {
       if (err) {
         console.log(err)

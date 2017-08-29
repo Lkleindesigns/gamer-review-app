@@ -41,13 +41,11 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(index_routes)
-app.use(review_routes)
+app.use('/', index_routes)
+app.use('/games/:id/reviews', review_routes)
 app.use('/games', game_routes)
 
-app.get('/', (req,res) => {
-  res.render('landing')
-})
+
 
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
