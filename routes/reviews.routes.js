@@ -2,7 +2,7 @@ var express = require('express')
 var router  = express.Router()
 
 // CONTROLLERS
-var reviewsController = require('../controllers/reviews.controller.js')
+var reviewsController = require('../controllers/reviews.controllers.js')
 
 router
   .route('/')

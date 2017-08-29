@@ -2,7 +2,7 @@ var express = require('express')
 var router  = express.Router()
 
 // CONTROLLERS
-var indexController = require('../controllers/users.controller.js')
+var indexController = require('../controllers/users.controllers.js')
 
 router
   .route('/')

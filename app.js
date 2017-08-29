@@ -47,10 +47,9 @@ app.use(index_routes)
 app.use(review_routes)
 app.use(game_routes)
 
-
-
-
-
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 })
+
+
+module.exports = {app}
