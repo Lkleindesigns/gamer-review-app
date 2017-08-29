@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'),
-      Review   = require('./models/review'),
-      Game     = require('./models/game')
+      Review   = require('./../models/review.model'),
+      Game     = require('./../models/game.model')
 
 var data = [
   {

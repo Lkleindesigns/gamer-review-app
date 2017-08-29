@@ -9,7 +9,7 @@ module.exports = {
       if (err) {
         console.log(err)
       } else {
-        res.render('games/index', {games: allGames})
+        res.render('games/index', {games: allGames, currentUser: req.user})
       }
     })
   }

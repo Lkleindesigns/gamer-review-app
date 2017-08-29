@@ -3,7 +3,7 @@ var dbUrl = 'mongodb://localhost/gamer-reviews'
 
 mongoose.Promise = Promise
 
-mongoose.connect(dbUrl)
+mongoose.connect(dbUrl, {useMongoClient: true})
 
 mongoose.connection.on('connected', function() {
   console.log('Connected to database:', dbUrl)
@@ -34,3 +34,4 @@ process.on('SIGTERM', function() {
 // MODELS AND SCHEMAS
 require('../models/game.model')
 require('../models/review.model')
+require('../models/user.model')
