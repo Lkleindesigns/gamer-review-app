@@ -45,8 +45,6 @@ app.use('/', index_routes)
 app.use('/games/:id/reviews', review_routes)
 app.use('/games', game_routes)
 
-
-
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 })
