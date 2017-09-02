@@ -1,8 +1,9 @@
 var express = require('express')
-var router  = express.Router()
+var router  = express.Router({mergeParams: true})
 
 // CONTROLLERS
-var gamesController = require('../controllers/games.controller.js')
+var gamesController = require('../controllers/games.controller')
+var authMiddleware  = require('../middleware/authMiddleware')
 
 router
   .route('/')
