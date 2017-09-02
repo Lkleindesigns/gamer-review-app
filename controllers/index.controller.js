@@ -18,13 +18,10 @@ module.exports = {
   },
 
 // ====== Not working properly ======
-  loginUser: function(req, res) {
-    passport.authenticate('local',{
+  loginUser: passport.authenticate('local', {
     successRedirect: '/games',
     failureRedirect: '/login'
-    }),function(req,res){
-    }
-  },
+  }),
   //===== Not working properly =======
 
   logoutUser: function(req, res) {

@@ -9,18 +9,19 @@ module.exports = {
       if (err) {
         console.log(err)
       } else {
-        res.render('games/index', {games: allGames, currentUser: req.user})
+        res.render('games/index', { games: allGames, currentUser: req.user })
       }
     })
   },
 
   getById: function(req, res) {
-    console.log(req.params.id)
-    Game.findById(req.params.id).populate('reviews').exec(function(err, game) {
+    var gameId = req.params.gameId
+
+    Game.findById(gameId).populate('reviews').exec(function(err, game) {
       if (err) {
         console.log(err)
       } else {
-        res.render('games/show', {game})
+        res.render('games/show', { game })
       }
     })
   },
@@ -29,7 +30,7 @@ module.exports = {
     var name = req.body.name
     var image = req.body.image
     var genre = req.body.genre
-    var newGame = {name, image, genre}
+    var newGame = { name, image, genre }
 
     Game.create(newGame, (err, newlyCreated) => {
       if (err) {

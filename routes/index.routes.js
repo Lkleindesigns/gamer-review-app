@@ -17,7 +17,7 @@ router
 router
   .route('/login')
     .get(indexController.login)
-    .post(authMiddleware.isLoggedIn, indexController.loginUser)
+    .post(indexController.loginUser)
 
 router
   .route('/logout')
