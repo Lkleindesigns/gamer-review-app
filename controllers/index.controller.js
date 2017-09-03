@@ -11,14 +11,19 @@ module.exports = {
         console.log(err)
         return res.render('register')
       }
-      loginUser()
+      passport.authenticate('local', {
+        successRedirect: '/games',
+        failureRedirect: '/login'
+      })(req, res, function() {})
     })
   },
 
-  loginUser: passport.authenticate('local', {
-    successRedirect: '/games',
-    failureRedirect: '/login'
-  }),
+  loginUser: function(req, res) {
+    passport.authenticate('local', {
+      successRedirect: '/games',
+      failureRedirect: '/login'
+    })(req, res, function() {})
+  },
 
   logoutUser: function(req, res) {
     req.logout()
