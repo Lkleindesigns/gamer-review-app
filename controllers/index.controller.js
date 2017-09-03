@@ -11,18 +11,19 @@ module.exports = {
         console.log(err)
         return res.render('register')
       }
-      passport.authenticate('local')(req, res, function() {
-        res.redirect('/games')
-      })
+      passport.authenticate('local', {
+        successRedirect: '/games',
+        failureRedirect: '/login'
+      })(req, res, function() {})
     })
   },
 
-// ====== Not working properly ======
-  loginUser: passport.authenticate('local', {
-    successRedirect: '/games',
-    failureRedirect: '/login'
-  }),
-  //===== Not working properly =======
+  loginUser: function(req, res) {
+    passport.authenticate('local', {
+      successRedirect: '/games',
+      failureRedirect: '/login'
+    })(req, res, function() {})
+  },
 
   logoutUser: function(req, res) {
     req.logout()
@@ -37,7 +38,7 @@ module.exports = {
     res.render('login')
   },
 
-  register: (req, res) => {
+  register: function(req, res) {
     res.render('register')
   }
 }
