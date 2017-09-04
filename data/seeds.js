@@ -15,7 +15,7 @@ var clearAndSeedDB = () => {
   Game.remove({}, (err) => {
     if (err) { console.log (err) } else {
       console.log('Games removed!')
-      // seedGames()
+      seedGames()
     }
   })
 
@@ -23,7 +23,7 @@ var clearAndSeedDB = () => {
   User.remove({}, (err) => {
     if (err) { console.log (err) } else {
       console.log('Users removed!')
-      // seedUsers()
+      seedUsers()
     }
   })
 
@@ -85,7 +85,7 @@ var seedGenres = () => {
   seedData.genres.forEach((seed) => {
     Genre.create({
       name: seed.name
-    }, (err, genre) => {
+    }, (err, newGenre) => {
       if (err) {
         console.log(err)
       } else{
@@ -96,16 +96,15 @@ var seedGenres = () => {
             upvoteScore: 0,
             downvoteScore: 0,
             totalVotes: 0
-          }, (err, trait) => {
+          }, (err, newTrait) => {
             if (err) {
-              console.log(err, trait)
+              console.log(err, newTrait)
             } else {
               console.log("********************************************************")
-              console.log("pushing: " + trait.name + " into: " + genre.name)
-              genre.traits.push(trait)
-              console.log('Trait pushed succesffuly')
+              console.log("pushing: " + trait.name + " into: " + newGenre.name)
+              newGenre.traits.addToSet(newTrait)
+              newGenre.save()
             }
-            genre.save()
           })
         })
       }
