@@ -57,12 +57,10 @@ var seedGames = () => {
           } else {
             game.reviews.push(review)
             game.save()
-            console.log('Review created!')
           }
         }
         )
       }
-      console.log('Game created!')
     })
   })
 }
@@ -75,7 +73,6 @@ var seedUsers = () => {
         console.log(err)
       } else {
         user.save()
-        console.log('User created!')
       }
     })
   })
@@ -89,7 +86,6 @@ var seedGenres = () => {
       if (err) {
         console.log(err)
       } else{
-        console.log("Genre Created")
         seed.traits.forEach((trait) => {
           Trait.create({
             name: trait.name,
@@ -100,8 +96,6 @@ var seedGenres = () => {
             if (err) {
               console.log(err, newTrait)
             } else {
-              console.log("********************************************************")
-              console.log("pushing: " + trait.name + " into: " + newGenre.name)
               newGenre.traits.addToSet(newTrait)
               newGenre.save()
             }
