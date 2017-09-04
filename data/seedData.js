@@ -29,5 +29,20 @@ module.exports = {
       username: 'WolfBlade',
       password: 'test'
     }
+  ],
+
+  genres: [
+    {
+      name: 'Puzzle'
+    },
+    {
+      name: 'Shooter'
+    },
+    {
+      name: 'Racing'
+    },
+    {
+      name: 'Card'
+    }
   ]
 }
