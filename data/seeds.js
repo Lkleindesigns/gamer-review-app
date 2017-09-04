@@ -1,16 +1,21 @@
 const mongoose = require('mongoose'),
-Review   = require('./../models/review.model'),
-Game     = require('./../models/game.model'),
-User     = require('./../models/user.model'),
-Genre    = require('./../models/genre.model'),
-Trait    = require('./../models/trait.model'),
-seedData = require('./../data/seedData')
+      Review   = require('./../models/review.model'),
+      Game     = require('./../models/game.model'),
+      User     = require('./../models/user.model'),
+      Genre    = require('./../models/genre.model'),
+      Trait    = require('./../models/trait.model'),
+      seedData = require('./../data/seedData')
 
 function seedDB() {
   clearAndSeedDB()
 }
 
 var clearAndSeedDB = () => {
+  console.log("Removing reviews...")
+  Review.remove({}, (err) => {
+    if (err) { console.log (err) } else { console.log('Reviews removed!') }
+  })
+
   console.log("Removing games...")
   Game.remove({}, (err) => {
     if (err) { console.log (err) } else {
@@ -29,7 +34,9 @@ var clearAndSeedDB = () => {
 
   console.log("Removing traits...")
   Trait.remove({}, (err) => {
-    if (err) { console.log (err) } else { console.log('Traits removed!') }
+    if (err) { console.log (err) } else {
+      console.log('Traits removed!')
+    }
   })
 
   console.log("Removing genres...")
