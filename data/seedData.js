@@ -40,11 +40,23 @@ module.exports = {
         { name: "Action trait 3" }
       ]
     },
+
     {
-      name: "RPG"
+      name: "RPG",
+      traits: [
+        { name: "RPG trait 1" },
+        { name: "RPG trait 2" },
+        { name: "RPG trait 3" }
+      ]
     },
+
     {
-      name: 'Co-Op'
+      name: 'Co-Op',
+      traits: [
+        { name: "Co-Op trait 1" },
+        { name: "Co-Op trait 2" },
+        { name: "Co-Op trait 3" }
+      ]
     }
   ]
 }
