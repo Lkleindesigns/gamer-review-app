@@ -2,11 +2,14 @@ const mongoose = require('mongoose'),
       Review   = require('./../models/review.model'),
       Game     = require('./../models/game.model'),
       User     = require('./../models/user.model'),
+      Genre    = require('./../models/genre.model'),
+      Trait    = require('./../models/trait.model'),
       seedData = require('./../data/seedData')
 
 function seedDB() {
   seedGames()
   seedUsers()
+  seedGenres()
 }
 
 var seedGames = () => {
@@ -59,6 +62,34 @@ var seedUsers = () => {
         })
       })
     }
+  })
+}
+
+var seedGenres = () => {
+  seedData.genres.forEach((seed) => {
+    Genre.create(seed, (err, genre) => {
+      if (err) {
+        console.log(err)
+      } else{
+        console.log("Genre Created")
+        genre.traits.forEach((trait) => {
+          Trait.create({
+            name: "Combat",
+            upvoteScore: 0,
+            downvoteScore: 0,
+            totalVotes: 0
+          }, (err, trait) => {
+            if (err) {
+              console.log(err)
+            } else {
+              genre.traits.push(trait)
+              genre.save()
+              console.log('Trait pushed succesffuly')
+            }
+          })
+        })
+      }
+    })
   })
 }
 

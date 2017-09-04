@@ -7,4 +7,4 @@ var traitSchema = new mongoose.Schema({
   totalVotes: Number
 })
 
-mondule.exports = mongoose.model("Trait", traitSchema)
+module.exports = mongoose.model("Trait", traitSchema)

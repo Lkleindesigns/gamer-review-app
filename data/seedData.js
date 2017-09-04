@@ -29,5 +29,25 @@ module.exports = {
       username: 'WolfBlade',
       password: 'test'
     }
+  ],
+
+  genres: [
+    {
+      name: "Action",
+      traits: [
+        { name: "Action trait 1" },
+        { name: "Action trait 2" },
+        { name: "Action trait 3" }
+      ]
+    },
+    {
+      name: "RPG"
+    },
+    {
+      name: 'Co-Op'
+    }
   ]
 }
+
+
+
