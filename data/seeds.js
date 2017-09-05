@@ -4,7 +4,8 @@ const mongoose = require('mongoose'),
       User     = require('./../models/user.model'),
       Genre    = require('./../models/genre.model'),
       Trait    = require('./../models/trait.model'),
-      seedData = require('./../data/seedData')
+      seedData = require('./../data/seedData'),
+      async    = require('async')
 
 function seedDB() {
   clearAndSeedDB()
@@ -85,32 +86,69 @@ var seedUsers = () => {
   })
 }
 
-var seedGenres = () => {
-  seedData.genres.forEach((seed) => {
-    Genre.create({
-      name: seed.name
-    }, (err, newGenre) => {
-      if (err) {
-        console.log(err)
-      } else{
-        seed.traits.forEach((trait) => {
-          Trait.create({
-            name: trait.name,
-            upvoteScore: 0,
-            downvoteScore: 0,
-            totalVotes: 0
-          }, (err, newTrait) => {
-            if (err) {
-              console.log(err, newTrait)
-            } else {
-              newGenre.traits.addToSet(newTrait)
-              newGenre.save()
-            }
-          })
-        })
-      }
-    })
-  })
-}
+// var seedGenres = () => {
+//   seedData.genres.forEach((seed) => {
+//     Genre.create({
+//       name: seed.name
+//     }, (err, newGenre) => {
+//       if (err) {
+//         console.log(err)
+//       } else{
+//         seed.traits.forEach((trait) => {
+//           Trait.create({
+//             name: trait.name,
+//             upvoteScore: 0,
+//             downvoteScore: 0,
+//             totalVotes: 0
+//           }, (err, newTrait) => {
+//             if (err) {
+//               console.log(err, newTrait)
+//             } else {
+//               newGenre.traits.addToSet(newTrait)
+//               newGenre.save()
+//             }
+//           })
+//         })
+//       }
+//     })
+//   })
+// }
 
+var seedGenres = function () {
+    async.mapSeries(seedData.genres, (seed, cb1) => {
+    Genre.create({ name: seed.name }, (err, newGenre) => {
+        // stop mapSeries() if an error occurs
+        if (err) return cb1(err);
+
+        console.log("Genre Created")
+
+        // create traits
+        async.eachSeries(seed.traits, (trait, cb2) => {
+            Trait.create({ name: trait.name, upvoteScore: 0, downvoteScore: 0, totalVotes: 0 }, (err, newTrait) => {
+                // stop eachSeries() if an error occurs
+                if (err) return cb2(err);
+
+                console.log("Trait Created")
+
+                // add trait to genre
+                newGenre.traits.push(newTrait);
+                // mark current async task as done
+                cb2();
+            });
+        }, err => {
+            // if an error occurred during eachSeries()
+            if (err) return cb1(err);
+            // otherwise, save the genre
+            newGenre.save(cb1);
+        });
+    })
+      }, (err, genres) => {
+          // if an error occurred during the operations, it will come here
+          if (err) {
+              console.log(err);
+              return;
+          }
+          console.log('DONE!', genres);
+      });
+  }
 module.exports = seedDB
