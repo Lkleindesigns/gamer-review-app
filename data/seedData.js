@@ -33,16 +33,33 @@ module.exports = {
 
   genres: [
     {
-      name: 'Puzzle'
+      name: "Action",
+      traits: [
+        { name: "Action trait 1" },
+        { name: "Action trait 2" },
+        { name: "Action trait 3" }
+      ]
     },
+
     {
-      name: 'Shooter'
+      name: "RPG",
+      traits: [
+        { name: "RPG trait 1" },
+        { name: "RPG trait 2" },
+        { name: "RPG trait 3" }
+      ]
     },
+
     {
-      name: 'Racing'
-    },
-    {
-      name: 'Card'
+      name: 'Co-Op',
+      traits: [
+        { name: "Co-Op trait 1" },
+        { name: "Co-Op trait 2" },
+        { name: "Co-Op trait 3" }
+      ]
     }
   ]
 }
+
+
+
