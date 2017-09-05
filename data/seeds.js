@@ -93,7 +93,7 @@ var seedGenres = function () {
     Game.create({ name: game.name, image: game.image, desc: game.desc }, function(err, newGame) {
       if (err) { return callback1(err) }
 
-      async.eachSeries(game.genres, function(genre, callback2) {
+      async.mapSeries(game.genres, function(genre, callback2) {
         Genre.create({ name: genre.name }, function(err, newGenre) {
           if (err) { return callback2(err) }
 
@@ -104,12 +104,12 @@ var seedGenres = function () {
               newGenre.traits.addToSet(newTrait)
               callback3()
             })
-          }, function(err) { if (err) return callback2(err) })
+          }, function(err) { if (err) return callback2(err); newGenre.save() })
 
           newGame.genres.addToSet(newGenre)
           callback2()
         })
-      }, function(err) { if (err) return callback1(err); newGame.save(callback1) })
+      }, function(err) { if (err) return callback1(err); newGame.save() })
     })
   }, function(err, games) { if (err) { return console.log(err) }
      console.log('DONE!', games)
