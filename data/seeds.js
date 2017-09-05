@@ -87,32 +87,62 @@ var seedUsers = () => {
 }
 
 var seedGenres = function () {
-  async.mapSeries(seedData.genres, (seed, cb1) => {
-    Genre.create({ name: seed.name }, (err, newGenre) => {
-    if (err) return cb1(err)
-    console.log("Genre Created")
-    async.eachSeries(seed.traits, (trait, cb2) => {
-      Trait.create({ name: trait.name, upvoteScore: 0, downvoteScore: 0, totalVotes: 0 }, (err, newTrait) => {
-        if (err) return cb2(err)
-        console.log("Trait Created")
-        newGenre.traits.push(newTrait)
-        cb2()
-      })
-    }, (err) => {
-        if (err) return cb1(err)
-        newGenre.save(cb1)
-      })
-    })
-    },
 
-    // OG Callback
-    (err, genres) => {
-      if (err) {
-        console.log(err)
-        return
-      }
-    console.log('DONE!', genres)
+  async.mapSeries(seedData.games, function(game, callback1) {
+    console.log(game.desc)
+    Game.create({ name: game.name, image: game.image, desc: game.desc }, function(err, newGame) {
+      if (err) { return callback1(err) }
+
+      async.eachSeries(game.genres, function(genre, callback2) {
+        Genre.create({ name: genre.name }, function(err, newGenre) {
+          if (err) { return callback2(err) }
+
+          async.eachSeries(genre.traits, function(trait, callback3) {
+            Trait.create({ name: trait.name, upvoteScore: 0, downvoteScore: 0, totalVotes: 0 }, function(err, newTrait) {
+              if (err) { return callback3(err) }
+
+              newGenre.traits.addToSet(newTrait)
+              callback3()
+            })
+          }, function(err) { if (err) return callback2(err) })
+
+          newGame.genres.addToSet(newGenre)
+          callback2()
+        })
+      }, function(err) { if (err) return callback1(err); newGame.save(callback1) })
+    })
+  }, function(err, games) { if (err) { return console.log(err) }
+     console.log('DONE!', games)
   })
 }
+
+  // async.mapSeries(seedData.genres, (seed, cb1) => {
+  //   Genre.create({ name: seed.name }, (err, newGenre) => {
+  //     if (err) return cb1(err)
+
+  //     async.eachSeries(seed.traits, (trait, cb2) => {
+  //       Trait.create({ name: trait.name, upvoteScore: 0, downvoteScore: 0, totalVotes: 0 }, (err, newTrait) => {
+  //         if (err) return cb2(err)
+
+  //         newGenre.traits.push(newTrait)
+  //         cb2()
+  //       })
+  //     },
+
+  //     (err) => {
+  //       if (err) return cb1(err)
+  //       newGenre.save(cb1)
+  //     })
+  //   })
+  // },
+
+  // (err, genres) => {
+  //   if (err) {
+  //     console.log(err)
+  //     return
+  //   }
+  //   console.log('DONE!', genres)
+  // })
+
 
 module.exports = seedDB
