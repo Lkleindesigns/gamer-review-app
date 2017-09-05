@@ -39,38 +39,6 @@ var clearAndSeedDB = () => {
       console.log('Traits removed!')
     }
   })
-
-  console.log("Removing genres...")
-  Genre.remove({}, (err) => {
-    if (err) { console.log (err) } else {
-      console.log('Genres removed!')
-      seedGenres()
-    }
-  })
-}
-
-var seedGames = () => {
-  seedData.games.forEach((seed) => {
-    Game.create(seed, (err, game) => {
-      if (err) {
-        console.log(err)
-      } else {
-        Review.create(
-        {
-          text: 'Awesome game',
-          author: 'Lucy'
-        }, (err, review) => {
-          if(err) {
-            console.log(err)
-          } else {
-            game.reviews.push(review)
-            game.save()
-          }
-        }
-        )
-      }
-    })
-  })
 }
 
 var seedUsers = () => {
@@ -86,7 +54,7 @@ var seedUsers = () => {
   })
 }
 
-var seedGenres = function () {
+var seedGames = function () {
 
   async.mapSeries(seedData.games, function(game, callback1) {
     console.log(game.desc)
@@ -101,12 +69,12 @@ var seedGenres = function () {
             Trait.create({ name: trait.name, upvoteScore: 0, downvoteScore: 0, totalVotes: 0 }, function(err, newTrait) {
               if (err) { return callback3(err) }
 
-              newGenre.traits.addToSet(newTrait)
+              newGenre.traits.addToSet(newTrait._id)
               callback3()
             })
           }, function(err) { if (err) return callback2(err); newGenre.save() })
 
-          newGame.genres.addToSet(newGenre)
+          newGame.genres.addToSet(newGenre._id)
           callback2()
         })
       }, function(err) { if (err) return callback1(err); newGame.save() })
