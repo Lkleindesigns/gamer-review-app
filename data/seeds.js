@@ -12,9 +12,18 @@ function seedDB() {
 }
 
 var clearAndSeedDB = () => {
-  console.log("Removing reviews...")
-  Review.remove({}, (err) => {
-    if (err) { console.log (err) } else { console.log('Reviews removed!') }
+  console.log("Removing traits...")
+  Trait.remove({}, (err) => {
+    if (err) { console.log (err) } else {
+      console.log('Traits removed!')
+    }
+  })
+
+  console.log("Removing genres...")
+  Genre.remove({}, (err) => {
+    if (err) { console.log (err) } else {
+      console.log('Genres removed!')
+    }
   })
 
   console.log("Removing games...")
@@ -30,13 +39,6 @@ var clearAndSeedDB = () => {
     if (err) { console.log (err) } else {
       console.log('Users removed!')
       seedUsers()
-    }
-  })
-
-  console.log("Removing traits...")
-  Trait.remove({}, (err) => {
-    if (err) { console.log (err) } else {
-      console.log('Traits removed!')
     }
   })
 }
@@ -82,35 +84,7 @@ var seedGames = function () {
   }, function(err, games) { if (err) { return console.log(err) }
      console.log('DONE!', games)
   })
+
 }
-
-  // async.mapSeries(seedData.genres, (seed, cb1) => {
-  //   Genre.create({ name: seed.name }, (err, newGenre) => {
-  //     if (err) return cb1(err)
-
-  //     async.eachSeries(seed.traits, (trait, cb2) => {
-  //       Trait.create({ name: trait.name, upvoteScore: 0, downvoteScore: 0, totalVotes: 0 }, (err, newTrait) => {
-  //         if (err) return cb2(err)
-
-  //         newGenre.traits.push(newTrait)
-  //         cb2()
-  //       })
-  //     },
-
-  //     (err) => {
-  //       if (err) return cb1(err)
-  //       newGenre.save(cb1)
-  //     })
-  //   })
-  // },
-
-  // (err, genres) => {
-  //   if (err) {
-  //     console.log(err)
-  //     return
-  //   }
-  //   console.log('DONE!', genres)
-  // })
-
 
 module.exports = seedDB
