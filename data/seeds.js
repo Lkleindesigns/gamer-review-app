@@ -69,12 +69,12 @@ var seedGames = function () {
             Trait.create({ name: trait.name, upvoteScore: 0, downvoteScore: 0, totalVotes: 0 }, function(err, newTrait) {
               if (err) { return callback3(err) }
 
-              newGenre.traits.addToSet(newTrait._id)
+              newGenre.traits.addToSet(newTrait)
               callback3()
             })
           }, function(err) { if (err) return callback2(err); newGenre.save() })
 
-          newGame.genres.addToSet(newGenre._id)
+          newGame.genres.addToSet(newGenre)
           callback2()
         })
       }, function(err) { if (err) return callback1(err); newGame.save() })
