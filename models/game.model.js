@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 var gameSchema = new mongoose.Schema({
   name: String,
   image: String,
-  description: String,
+  desc: String,
   developer: String,
   publisher: String,
   scoreGamePlay: Number,
@@ -22,7 +22,7 @@ var gameSchema = new mongoose.Schema({
       ref: "Trait"
     }
   ],
-  genre: [
+  genres: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Genre"
