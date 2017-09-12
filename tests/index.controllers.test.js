@@ -22,7 +22,7 @@ beforeEach(populateUsers)
 
 describe('POST /register', () => {
   it('should create a new user', (done) => {
-    var username = 'logan@example.com'
+    var username = 'logan1@example.com'
     var password = 'abc123'
 
     request(app)

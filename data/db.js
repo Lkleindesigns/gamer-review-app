@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 
 var dbUrl = 'mongodb://localhost/gamer-reviews'
 var dbUrlTest = 'mongodb://localhost/gamer-reviews-test'
-var env = process.env.NODE_ENV || 'development'
 
+var env = process.env.NODE_ENV || 'development'
 console.log('************ENV', env)
 
 if(env === 'development') {
