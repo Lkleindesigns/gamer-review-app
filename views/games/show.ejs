@@ -15,8 +15,8 @@
         <img class="img-responsive" src="<%= game.image %>">
         <div class="caption-full">
           <h4 class="pull-right"><%=game.genre%></h4>
-          <h4><a><%=game.name%></a></h4>
-          <p><%=game.description%></p>
+          <h4><a><%= game.name %></a></h4>
+          <p><%= game.description %></p>
         </div>
       </div>
       <div class="well">
@@ -24,15 +24,16 @@
             <a class="btn btn-success" href="/games/<%=game._id%>/reviews/new">Add new review!</a>
         </div>
         <hr>
-        <%game.reviews.forEach(function(review) { %>
-        <div class="row">
-          <div class="col-md-12">
-            <strong><%=review.author%></strong>
-            <span class="pull-right"> 10 days ago</span>
-            <p><%=review.text%></p>
+        <% game.genres.forEach(function(genre) { %>
+          <div class="row">
+            <div class="col-md-12">
+            <%= genre.name %>
+            <% genre.traits.forEach(function(trait) { %>
+              <div><%= trait.name %></div>
+            <% }) %>
+            </div>
           </div>
-        </div>
-         <% })%>
+        <% }) %>
       </div>
     </div>
   </div>

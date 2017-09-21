@@ -59,7 +59,7 @@ var seedUsers = () => {
 var seedGames = function () {
 
   async.mapSeries(seedData.games, function(game, callback1) {
-    console.log(game.desc)
+
     Game.create({ name: game.name, image: game.image, desc: game.desc }, function(err, newGame) {
       if (err) { return callback1(err) }
 
