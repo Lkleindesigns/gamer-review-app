@@ -17,13 +17,23 @@ module.exports = {
   getById: function(req, res) {
     var gameId = req.params.gameId
 
-    Game.findById(gameId).populate('reviews').exec(function(err, game) {
-      if (err) {
-        console.log(err)
-      } else {
-        res.render('games/show', { game })
-      }
-    })
+    Game
+      .findById(gameId)
+      .populate({
+        path: 'genres',
+        model: 'Genre',
+        populate: {
+          path: 'traits',
+          model: 'Trait'
+        }
+      })
+      .exec((err, game) => {
+        if (err) {
+          console.log(err)
+        } else {
+          res.render('games/show', { game })
+        }
+      })
   },
 
   addNewGame: function(req, res) {

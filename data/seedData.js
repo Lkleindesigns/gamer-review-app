@@ -40,34 +40,34 @@ module.exports = {
     // }
   ],
 
-  genres: [
-    {
-      name: "Action",
-      traits: [
-        { name: "Action trait 1" },
-        { name: "Action trait 2" },
-        { name: "Action trait 3" }
-      ]
-    },
+  // genres: [
+  //   {
+  //     name: "Action",
+  //     traits: [
+  //       { name: "Action trait 1" },
+  //       { name: "Action trait 2" },
+  //       { name: "Action trait 3" }
+  //     ]
+  //   },
 
-    {
-      name: "RPG",
-      traits: [
-        { name: "RPG trait 1" },
-        { name: "RPG trait 2" },
-        { name: "RPG trait 3" }
-      ]
-    },
+  //   {
+  //     name: "RPG",
+  //     traits: [
+  //       { name: "RPG trait 1" },
+  //       { name: "RPG trait 2" },
+  //       { name: "RPG trait 3" }
+  //     ]
+  //   },
 
-    {
-      name: 'Co-Op',
-      traits: [
-        { name: "Co-Op trait 1" },
-        { name: "Co-Op trait 2" },
-        { name: "Co-Op trait 3" }
-      ]
-    }
-  ],
+  //   {
+  //     name: 'Co-Op',
+  //     traits: [
+  //       { name: "Co-Op trait 1" },
+  //       { name: "Co-Op trait 2" },
+  //       { name: "Co-Op trait 3" }
+  //     ]
+  //   }
+  // ],
 
   users: [
     {
