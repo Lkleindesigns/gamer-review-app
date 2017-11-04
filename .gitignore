@@ -1,2 +1,8 @@
 node_modules/
 package-lock.json
+data/_tmp
+data/gamer-reviews.0
+data/gamer-reviews.ns
+data/local.0
+data/local.ns
+data/mongod.lock
