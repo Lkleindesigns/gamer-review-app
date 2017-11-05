@@ -27,12 +27,19 @@
         <% game.genres.forEach(function(genre) { %>
           <div class="row">
             <div class="col-md-12">
-            <%= genre.name %>
+            <strong><%= genre.name %></strong>
             <% genre.traits.forEach(function(trait) { %>
-              <div><%= trait.name %></div>
+              <div>
+                <div><%= trait.upvoteScore %></div>
+                <div><%= trait.downvoteScore %></div>
+                <div style="display: inline"><%= trait.name %></div>
+                <a class="glyphicon glyphicon-chevron-up" href="/games/<%=game._id%>/traits/<%=trait._id%>/upvote" ></a>
+                <a class="glyphicon glyphicon-chevron-down" href="/games/<%=game._id%>/traits/<%=trait._id%>/downvote" ></a>
+              </div>
             <% }) %>
             </div>
           </div>
+          <hr>
         <% }) %>
       </div>
     </div>

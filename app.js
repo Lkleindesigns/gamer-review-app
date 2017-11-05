@@ -37,14 +37,18 @@ app.use((req, res, next) => {
 
 // ----- ROUTES ----- //
 var game_routes   = require('./routes/games.routes')
+var trait_routes  = require('./routes/traits.routes')
 var review_routes = require('./routes/reviews.routes')
 var index_routes  = require('./routes/index.routes')
 
 app.use('/', index_routes)
-app.use('/games/:id/reviews', review_routes)
 app.use('/games', game_routes)
+
+app.use('/games/:gameId/traits', trait_routes)
+
 // ----- ROUTES ----- //
 
+// ----- LISTEN ----- //
 app.listen(app.get('port'), function() {
     console.log('Node app is running on port', app.get('port'));
 })

@@ -4,6 +4,11 @@ var mongoose = require('mongoose')
 var Game = require('../models/game.model')
 
 module.exports = {
+  test: function(req, res) {
+    console.log(req.params.gameId)
+    res.send('test')
+  },
+
   getAllGames: function(req, res) {
     Game.find({}, (err, allGames) => {
       if (err) {
@@ -52,7 +57,7 @@ module.exports = {
   },
 
   updateById: function(req, res) {
-    // TODo
+    // TODO
   },
 
   deleteById: function(req, res) {
