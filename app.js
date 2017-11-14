@@ -1,4 +1,5 @@
-require('./data/db.js')
+var db = require('./data/db.js')
+var models  = require('./models')
 
 const express       = require('express'),
       app           = express(),
@@ -6,7 +7,7 @@ const express       = require('express'),
       seedDB        = require('./data/seeds'),
       passport      = require('passport'),
       LocalStrategy = require('passport-local'),
-      User          = require('./models/user.model')
+      User          = models.User
 
 app.set('port', (process.env.PORT || 3000))
 
@@ -44,7 +45,9 @@ var index_routes  = require('./routes/index.routes')
 app.use('/', index_routes)
 app.use('/games', game_routes)
 
-app.use('/games/:gameId/traits', trait_routes)
+// app.use('/games/:gameId/traits', trait_routes)
+
+app.use('/api/traits', trait_routes)
 
 // ----- ROUTES ----- //
 

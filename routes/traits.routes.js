@@ -6,11 +6,11 @@ var traitsController = require('../controllers/traits.controller')
 // var authMiddleware  = require('../middleware/authMiddleware')
 
 router
-  .route('/:traitId/upvote')
+  .route('/:gameId/:traitId/upvote')
     .get(traitsController.upvote)
 
 router
-  .route('/:traitId/downvote')
+  .route('/:gameId/:traitId/downvote')
     .get(traitsController.downvote)
 
 module.exports = router

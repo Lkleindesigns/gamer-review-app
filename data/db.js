@@ -30,8 +30,3 @@ process.on('SIGTERM', function() {
     process.exit(0)
   })
 })
-
-// MODELS AND SCHEMAS
-require('../models/game.model')
-require('../models/review.model')
-require('../models/user.model')

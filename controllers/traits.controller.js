@@ -1,7 +1,8 @@
 var mongoose = require('mongoose')
+var models  = require('../models')
 
 // MODELS
-var Trait = require('../models/trait.model')
+var Trait = models.Trait
 
 module.exports = {
 
