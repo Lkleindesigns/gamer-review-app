@@ -23,34 +23,57 @@
         <div class="text-right">
             <a class="btn btn-success" href="/games/<%=game._id%>/reviews/new">Add new review!</a>
         </div>
-        <hr>
-        <% game.genres.forEach(function(genre) { %>
-          <div class="row">
-            <div class="col-md-12">
-            <strong><%= genre.name %></strong>
-            <% genre.traits.forEach(function(trait) { %>
-              <div>
-                <div><%= trait.upvoteScore %></div>
-                <div><%= trait.downvoteScore %></div>
-                <div style="display: inline"><%= trait.name %></div>
-                <a class="glyphicon glyphicon-chevron-up" href="/api/traits/<%=trait._id%>/upvote" ></a>
-                <a class="glyphicon glyphicon-chevron-down" href="/api/traits/<%=trait._id%>/downvote" ></a>
-              </div>
-            <% }) %>
-            </div>
+        <div class="row">
+          <div class="genre-lists col-md-12">
           </div>
-          <hr>
-        <% }) %>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-  $.getJSON("/api/traits/<%= game._id %>")
-  .then((data) => {
-    console.log(data)
+  $(document).ready(() => {
+    $.getJSON("/api/traits/<%= game._id %>")
+    .then(addTraits)
   })
+
+  function addTraits(traitsObj) {
+    $.each(traitsObj, (key) => {
+      var hr = $('<hr></hr>')
+      var newTraitHeader = $('<div style="display: block;">' + key + '</div>')
+      var newTraitList = $('<div class="trait-list" style="padding: 0; list-style-type: none;"></div>')
+
+      $('.genre-lists').append(newTraitHeader)
+      $(newTraitHeader).append(newTraitList)
+      $(newTraitHeader).append(hr)
+
+      traitsObj[key].forEach((genreTrait) => {
+        addTrait(genreTrait, newTraitList)
+      })
+    })
+  }
+
+  function addTrait(trait, tList) {
+    var newTrait = $('<span class="trait" style="display: block;">' + trait.name + '</span>')
+    newTrait.data('id', trait._id)
+    $(tList).append(newTrait)
+    upvoteTrait(newTrait)
+  }
+
+  function upvoteTrait(trait) {
+    $(trait).on('click', () => {
+      var traitId = $(this).data('id')
+      var putUrl = '/api/traits/' + traitId + '/upvote'
+      $.ajax({
+        method: 'PUT',
+        url: putUrl
+      })
+      .then((data) => {
+        console.log(data)
+      })
+    })
+  }
 </script>
 
 <% include ../partials/footer %>
