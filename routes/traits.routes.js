@@ -10,11 +10,11 @@ router
     .get(traitsController.allTraitsForGame)
 
 router
-  .route('/:traitId/upvote')
-    .put(traitsController.upvote)
+  .route('/:traitId/byId')
+    .get(traitsController.getById)
 
 router
-  .route('/:traitId/downvote')
-    .put(traitsController.downvote)
+  .route('/:traitId/upvote')
+    .put(traitsController.upvote)
 
 module.exports = router

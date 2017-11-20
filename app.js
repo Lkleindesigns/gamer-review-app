@@ -15,6 +15,7 @@ app.set('port', (process.env.PORT || 3000))
 seedDB()
 
 app.set('view engine', "ejs")
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/public', express.static(__dirname + '/public'))
 

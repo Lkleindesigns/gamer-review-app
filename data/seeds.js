@@ -57,7 +57,6 @@ var seedUsers = () => {
 }
 
 var seedGames = function () {
-
   async.mapSeries(seedData.games, function(game, callback1) {
 
     Game.create({ name: game.name, image: game.image, desc: game.desc }, function(err, newGame) {
@@ -84,7 +83,6 @@ var seedGames = function () {
   }, function(err, games) { if (err) { return console.log(err) }
      console.log('DONE!', games)
   })
-
 }
 
 module.exports = seedDB

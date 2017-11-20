@@ -63,8 +63,9 @@
 
   function upvoteTrait(trait) {
     $(trait).on('click', () => {
-      var traitId = $(this).data('id')
+      var traitId = $(trait).data('id')
       var putUrl = '/api/traits/' + traitId + '/upvote'
+      console.log(putUrl)
       $.ajax({
         method: 'PUT',
         url: putUrl

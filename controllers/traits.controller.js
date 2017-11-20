@@ -8,6 +8,7 @@ var Game = models.Game
 module.exports = {
 
   allTraitsForGame: function(req, res) {
+    console.log('traits api')
     var gameId = req.params.gameId
 
     Game
@@ -32,10 +33,27 @@ module.exports = {
       })
   },
 
+  getById: function(req, res) {
+    var traitId = req.params.traitId
+
+    console.log('getting by id' + traitId)
+
+    Trait.findById(traitId)
+    .then((trait) => {
+      res.json(trait)
+    })
+    .catch((err) => {
+      res.send(err)
+    })
+  },
+
   upvote: function(req, res) {
     console.log(req.params)
 
     var traitId = req.params.traitId
+
+    console.log('CONTROLLER')
+    console.log(traitId)
 
     Trait
       .findOneAndUpdate(traitId, { $inc: { upvoteScore: 1 } }, {new: true})
