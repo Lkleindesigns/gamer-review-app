@@ -34,7 +34,7 @@
 
 <script>
   $(document).ready(() => {
-    $.getJSON("/api/traits/<%= game._id %>")
+    $.getJSON("/api/traits/<%= game._id %>/all")
     .then(addTraits)
   })
 
