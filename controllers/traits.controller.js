@@ -36,8 +36,6 @@ module.exports = {
   getById: function(req, res) {
     var traitId = req.params.traitId
 
-    console.log('getting by id' + traitId)
-
     Trait.findById(traitId)
     .then((trait) => {
       res.json(trait)
@@ -48,15 +46,10 @@ module.exports = {
   },
 
   upvote: function(req, res) {
-    console.log(req.params)
-
     var traitId = req.params.traitId
 
-    console.log('CONTROLLER')
-    console.log(traitId)
-
     Trait
-      .findOneAndUpdate(traitId, { $inc: { upvoteScore: 1 } }, {new: true})
+      .findOneAndUpdate({_id: traitId}, { $inc: { upvoteScore: 1 } }, {new: true})
       .then((trait) => {
         res.json(trait)
       })
