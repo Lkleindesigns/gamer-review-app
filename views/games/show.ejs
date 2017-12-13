@@ -23,20 +23,20 @@
         <div class="text-right">
             <a class="btn btn-success" href="/games/<%=game._id%>/reviews/new">Add new review!</a>
         </div>
-        <hr>
-        <% game.genres.forEach(function(genre) { %>
-          <div class="row">
-            <div class="col-md-12">
-            <%= genre.name %>
-            <% genre.traits.forEach(function(trait) { %>
-              <div><%= trait.name %></div>
-            <% }) %>
-            </div>
+        <div class="row">
+          <div class="genre-lists col-md-12">
           </div>
-        <% }) %>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
+<script>
+  var gameId = "<%= game._id %>"
+</script>
+
+<script type="text/javascript" src="/public/js/traits.js"></script>
+
+<% include ../partials/footer %>
 

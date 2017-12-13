@@ -1,17 +1,23 @@
 var mongoose = require('mongoose')
+var models  = require('../models')
 
 // MODELS
-var Game = require('../models/game.model')
+var Game = models.Game
 
 module.exports = {
+  test: function(req, res) {
+    console.log(req.params.gameId)
+    res.send('test')
+  },
+
   getAllGames: function(req, res) {
-    Game.find({}, (err, allGames) => {
-      if (err) {
-        console.log(err)
-      } else {
+    Game.find()
+      .then((allGames) => {
         res.render('games/index', { games: allGames, currentUser: req.user })
-      }
-    })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   },
 
   getById: function(req, res) {
@@ -31,7 +37,7 @@ module.exports = {
         if (err) {
           console.log(err)
         } else {
-          res.render('games/show', { game })
+          res.render('games/show', { game: game })
         }
       })
   },
@@ -52,7 +58,7 @@ module.exports = {
   },
 
   updateById: function(req, res) {
-    // TODo
+    // TODO
   },
 
   deleteById: function(req, res) {
