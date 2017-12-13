@@ -37,7 +37,7 @@ module.exports = {
         if (err) {
           console.log(err)
         } else {
-          res.render('games/show', { game })
+          res.render('games/show', { game: game })
         }
       })
   },

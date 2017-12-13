@@ -33,49 +33,10 @@
 </div>
 
 <script>
-  $(document).ready(() => {
-    $.getJSON("/api/traits/<%= game._id %>/all")
-    .then(addTraits)
-  })
-
-  function addTraits(traitsObj) {
-    $.each(traitsObj, (key) => {
-      var hr = $('<hr></hr>')
-      var newTraitHeader = $('<div style="display: block;">' + key + '</div>')
-      var newTraitList = $('<div class="trait-list" style="padding: 0; list-style-type: none;"></div>')
-
-      $('.genre-lists').append(newTraitHeader)
-      $(newTraitHeader).append(newTraitList)
-      $(newTraitHeader).append(hr)
-
-      traitsObj[key].forEach((genreTrait) => {
-        addTrait(genreTrait, newTraitList)
-      })
-    })
-  }
-
-  function addTrait(trait, tList) {
-    var newTrait = $('<span class="trait" style="display: block;">' + trait.name + '</span>')
-    newTrait.data('id', trait._id)
-    $(tList).append(newTrait)
-    upvoteTrait(newTrait)
-  }
-
-  function upvoteTrait(trait) {
-    $(trait).on('click', () => {
-      var traitId = $(trait).data('id')
-      var putUrl = '/api/traits/' + traitId + '/upvote'
-      console.log(putUrl)
-      $.ajax({
-        method: 'PUT',
-        url: putUrl
-      })
-      .then((data) => {
-        console.log(data)
-      })
-    })
-  }
+  var gameId = "<%= game._id %>"
 </script>
+
+<script type="text/javascript" src="/public/js/traits.js"></script>
 
 <% include ../partials/footer %>
 
