@@ -17,4 +17,8 @@ router
   .route('/:traitId/upvote')
     .put(traitsController.upvote)
 
+router
+  .route('/:traitId/downvote')
+    .put(traitsController.downvote)
+
 module.exports = router

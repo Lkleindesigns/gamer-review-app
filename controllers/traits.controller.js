@@ -59,12 +59,10 @@ module.exports = {
   },
 
   downvote: function(req, res) {
-    console.log(req.params)
-
     var traitId = req.params.traitId
 
     Trait
-      .findOneAndUpdate(traitId, { $inc: { downvoteScore: 1 } }, {new: true})
+      .findOneAndUpdate({_id: traitId}, { $inc: { downvoteScore: 1 } }, {new: true})
       .then((trait) => {
         res.json(trait)
       })
