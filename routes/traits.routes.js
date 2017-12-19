@@ -15,10 +15,10 @@ router
 
 router
   .route('/:traitId/upvote')
-    .put(traitsController.upvote)
+    .put(authMiddleware.isLoggedIn, traitsController.upvote)
 
 router
   .route('/:traitId/downvote')
-    .put(traitsController.downvote)
+    .put(authMiddleware.isLoggedIn, traitsController.downvote)
 
 module.exports = router

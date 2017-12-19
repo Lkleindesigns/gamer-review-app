@@ -30,7 +30,7 @@ module.exports = {
     req.logout()
     res.redirect('/games')
   },
-  // NOT SURE IF THIS IS RIGHT
+
   landing: function(req, res) {
     res.render('landing')
   },
