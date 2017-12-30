@@ -49,7 +49,10 @@ module.exports = {
     var traitId = req.params.traitId
 
     Trait
-      .findOneAndUpdate({_id: traitId}, { $inc: { upvoteScore: 1 } }, {new: true})
+      .findOneAndUpdate({_id: traitId}, {
+        $inc:      { upvoteScore: 1 },
+        $addToSet: { votedOnTraits: traitId }
+      }, {new: true})
       .then((trait) => {
         res.json(trait)
       })
