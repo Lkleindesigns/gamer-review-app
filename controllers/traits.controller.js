@@ -3,7 +3,8 @@ var models  = require('../models')
 
 // MODELS
 var Trait = models.Trait
-var Game = models.Game
+var User  = models.User
+var Game  = models.Game
 
 module.exports = {
 
@@ -48,11 +49,20 @@ module.exports = {
   upvote: function(req, res) {
     var traitId = req.params.traitId
 
+    User
+      .findById(req.user._id)
+      .then((foundUser) => {
+        if (foundUser.votedOnTraits.indexOf(traitId) > -1) {
+          req.flash('danger', 'Already voted.')
+          res.redirect('back')
+        } else {
+          foundUser.votedOnTraits.push(traitId)
+          foundUser.save()
+        }
+      })
+
     Trait
-      .findOneAndUpdate({_id: traitId}, {
-        $inc:      { upvoteScore: 1 },
-        $addToSet: { votedOnTraits: traitId }
-      }, {new: true})
+      .findOneAndUpdate({_id: traitId}, { $inc: { upvoteScore: 1 } }, {new: true})
       .then((trait) => {
         res.json(trait)
       })
@@ -74,3 +84,5 @@ module.exports = {
       })
   }
 }
+
+

@@ -2,8 +2,9 @@ var express = require('express')
 var router  = express.Router({mergeParams: true})
 
 // CONTROLLERS
-var traitsController = require('../controllers/traits.controller')
-var authMiddleware  = require('../middleware/authMiddleware')
+var traitsController  = require('../controllers/traits.controller')
+var authMiddleware    = require('../middleware/authMiddleware')
+var votingMiddleware  = require('../middleware/votingMiddleware')
 
 router
   .route('/:traitId')
@@ -15,7 +16,7 @@ router
 
 router
   .route('/:traitId/upvote')
-    .put(authMiddleware.isLoggedIn, traitsController.upvote)
+    .put(votingMiddleware.checkForVoteEligibility, traitsController.upvote)
 
 router
   .route('/:traitId/downvote')
