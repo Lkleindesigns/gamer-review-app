@@ -1,6 +1,10 @@
-/*.thumbnail img {
-  width: 100%;
-}*/
+.trait {
+  padding-bottom: 12px;
+}
+
+.vote {
+  padding-left: 12px;
+}
 
 .thumbnail {
   padding: 0;
