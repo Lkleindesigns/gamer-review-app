@@ -27,6 +27,7 @@ var votingMiddleware = {
         })
     } else {
       console.log('Must be logged in to vote')
+      res.status(403).json({ error: 'Must be logged in to vote.' })
     }
   }
 }

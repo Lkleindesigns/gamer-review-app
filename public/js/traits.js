@@ -52,7 +52,8 @@ function upvoteTrait(trait) {
       $(replaceEle).replaceWith('<div class="upScore" style="display: inline;">' + data.upvoteScore  + '</div>')
     })
     .catch((err) => {
-      fadeMessage()
+      console.log(err.responseJSON.error)
+      fadeMessage(err)
     })
   })
 }
@@ -75,10 +76,8 @@ function downvoteTrait(trait) {
   })
 }
 
-function fadeMessage() {
-  $(function() {
-    $('#flash').delay(500).fadeIn('normal', function() {
-      $(this).delay(2500).fadeOut()
-    })
+function fadeMessage(err) {
+  $('.flash-msg').text(err.responseJSON.error).delay(0).fadeIn(300, function() {
+    $(this).delay(2500).fadeOut(700)
   })
 }
