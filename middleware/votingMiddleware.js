@@ -7,26 +7,27 @@ var User  = models.User
 
 var votingMiddleware = {
   checkForVoteEligibility: function(req, res, next) {
-    if (req.isAuthenticated()) {
-      var traitId = req.params.traitId
+    var traitId = req.params.traitId
 
-      User.findById(req.user._id)
-      .exec()
-      .then((foundUser) => {
-        if (foundUser.votedOnTraits.indexOf(traitId) > -1) {
-          req.flash('danger', 'Already voted.')
-          res.redirect('back')
-        } else {
-          // foundUser.votedOnTraits.push(traitId)
-          // foundUser.save()
-          // console.log(foundUser)
-          console.log('moving on...')
-          return next()
-        }
-      })
+    if (req.isAuthenticated()) {
+      User
+        .findById(req.user._id)
+        .then((foundUser) => {
+          if (foundUser.votedOnTraits.indexOf(traitId) > -1) {
+            res.status(403).json({ error: 'Already voted.' })
+          } else {
+            foundUser.votedOnTraits.push(traitId)
+            foundUser.save()
+            return next()
+          }
+        })
+        .catch((err) => {
+          console.log('No found user.')
+          console.log(err)
+        })
     } else {
-      req.flash('danger', 'Must be logged in.')
-      res.redirect('back')
+      console.log('Must be logged in to vote')
+      res.status(403).json({ error: 'Must be logged in to vote.' })
     }
   }
 }

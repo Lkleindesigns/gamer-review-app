@@ -1,5 +1,6 @@
 /* global $ */
 /* global gameId */
+/* global replaceEle */
 
 $(document).ready(() => {
   $.getJSON("/api/traits/" + gameId + "/all")
@@ -46,8 +47,13 @@ function upvoteTrait(trait) {
       url: putUrl
     })
     .then((data) => {
+      console.log('Success')
       replaceEle = $('div').find(trait.children('.upScore'))
       $(replaceEle).replaceWith('<div class="upScore" style="display: inline;">' + data.upvoteScore  + '</div>')
+    })
+    .catch((err) => {
+      console.log(err.responseJSON.error)
+      fadeMessage(err)
     })
   })
 }
@@ -58,11 +64,20 @@ function downvoteTrait(trait) {
     var putUrl = '/api/traits/' + traitId + '/downvote'
     $.ajax({
       method: 'PUT',
-      url: putUrl
+      url: putUrl,
+      success: function(data) {
+        replaceEle = $('div').find(trait.children('.downScore'))
+        $(replaceEle).replaceWith('<div class="downScore" style="display: inline;">' + data.downvoteScore  + '</div>')
+      },
+      error: function(err) {
+        console.log("FAIL!")
+      }
     })
-    .then((data) => {
-      replaceEle = $('div').find(trait.children('.downScore'))
-      $(replaceEle).replaceWith('<div class="downScore" style="display: inline;">' + data.downvoteScore  + '</div>')
-    })
+  })
+}
+
+function fadeMessage(err) {
+  $('.flash-msg').text(err.responseJSON.error).delay(0).fadeIn(300, function() {
+    $(this).delay(2500).fadeOut(700)
   })
 }

@@ -49,24 +49,13 @@ module.exports = {
   upvote: function(req, res) {
     var traitId = req.params.traitId
 
-    User
-      .findById(req.user._id)
-      .then((foundUser) => {
-        if (foundUser.votedOnTraits.indexOf(traitId) > -1) {
-          req.flash('danger', 'Already voted.')
-          res.redirect('back')
-        } else {
-          foundUser.votedOnTraits.push(traitId)
-          foundUser.save()
-        }
-      })
-
     Trait
       .findOneAndUpdate({_id: traitId}, { $inc: { upvoteScore: 1 } }, {new: true})
       .then((trait) => {
         res.json(trait)
       })
       .catch((err) => {
+        console.log('MOOO')
         res.send(err)
       })
   },
