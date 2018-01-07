@@ -2,23 +2,56 @@ var passport = require('passport')
 var models  = require('../models')
 
 // MODELS
-var Trait = models.Trait
-var User  = models.User
+var Trait       = models.Trait
+var User        = models.User
+var VoteKeeper  = models.VoteKeeper
 
 var votingMiddleware = {
   checkForVoteEligibility: function(req, res, next) {
     var traitId = req.params.traitId
+    var voteType = req.body.voteType
 
     if (req.isAuthenticated()) {
       User
         .findById(req.user._id)
         .then((foundUser) => {
-          if (foundUser.votedOnTraits.indexOf(traitId) > -1) {
-            res.status(403).json({ error: 'Already voted.' })
+          var votedOnTrait = userVotedOnTrait(foundUser.votedOnTraits, traitId)
+
+          // Check if the User has even voted on the trait in question
+          if (votedOnTrait) {
+
+            // User has the traitId in their votedOn list, now will check to see if it's the same vote type (up vs. down)
+            if (voteType == votedOnTrait.voteType) {
+              res.status(403).json({ error: 'Already voted.' })
+            } else {
+
+              // switch voteType and proceed proceed with voting
+              VoteKeeper.findById(traitId)
+              .then((foundVoteKeeper) => {
+                if (votedOnTrait.voteType == "up") {
+                  votedOnTrait.voteType == "down"
+                } else if (votedOnTrait.voteType == "down") {
+                  votedOnTrait.voteType == "up"
+                }
+                foundVoteKeeper.save()
+                return next()
+              })
+            }
+
+          // User has never voted on this trait before, create new voteKeeper and add to Users list of voted on traits
           } else {
-            foundUser.votedOnTraits.push(traitId)
-            foundUser.save()
-            return next()
+
+            // Method for creatings and adding voteKeeper objects to User, temporary until VoteKeeper controller is implemented.
+            var newVoteKeeper = { traitId, voteType }
+            VoteKeeper.create(newVoteKeeper, (err, voteKeeper) => {
+              if (err) {
+                console.log(err)
+              } else {
+                foundUser.votedOnTraits.push(voteKeeper)
+                foundUser.save()
+                return next()
+              }
+            })
           }
         })
         .catch((err) => {
@@ -33,3 +66,10 @@ var votingMiddleware = {
 }
 
 module.exports = votingMiddleware
+
+function userVotedOnTrait(array, item) {
+  for(var i = 0; i < array.length; i++) {
+      if (array[i].traitId === item) return array[i]
+  }
+  return -1
+}

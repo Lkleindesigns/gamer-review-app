@@ -44,7 +44,8 @@ function upvoteTrait(trait) {
     var putUrl = '/api/traits/' + traitId + '/upvote'
     $.ajax({
       method: 'PUT',
-      url: putUrl
+      url: putUrl,
+      data: { voteType: "up" }
     })
     .then((data) => {
       console.log('Success')
