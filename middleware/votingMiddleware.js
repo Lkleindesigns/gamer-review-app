@@ -28,11 +28,7 @@ var votingMiddleware = {
               // switch voteType and proceed proceed with voting
               VoteKeeper.findById(traitId)
               .then((foundVoteKeeper) => {
-                if (votedOnTrait.voteType == "up") {
-                  votedOnTrait.voteType == "down"
-                } else if (votedOnTrait.voteType == "down") {
-                  votedOnTrait.voteType == "up"
-                }
+                foundVoteKeeper.voteType = votedOnTrait.voteType == "up" ? "down" : "up"
                 foundVoteKeeper.save()
                 return next()
               })
