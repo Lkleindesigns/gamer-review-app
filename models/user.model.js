@@ -7,7 +7,7 @@ var UserSchema = new mongoose.Schema({
   votedOnTraits: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Trait"
+      ref: "VoteKeeper"
     }
   ]
 })
