@@ -18,7 +18,7 @@ var votingMiddleware = {
           var votedOnTrait = userVotedOnTrait(foundUser.votedOnTraits, traitId)
 
           // Check if the User has even voted on the trait in question
-          if (votedOnTrait) {
+          if (votedOnTrait != -1) {
 
             // User has the traitId in their votedOn list, now will check to see if it's the same vote type (up vs. down)
             if (voteType == votedOnTrait.voteType) {
@@ -26,28 +26,36 @@ var votingMiddleware = {
             } else {
 
               // switch voteType and proceed proceed with voting
-              VoteKeeper.findById(traitId)
-              .then((foundVoteKeeper) => {
-                foundVoteKeeper.voteType = votedOnTrait.voteType == "up" ? "down" : "up"
-                foundVoteKeeper.save()
-                return next()
-              })
+              for (var i = 0; i <  foundUser.votedOnTraits.length; i++) {
+                if ( foundUser.votedOnTraits[i]._id == votedOnTrait._id) {
+                  User.findById(foundUser._id, (err, user) => {
+                    if (err) {
+                      console.log(err)
+                    } else {
+                      user.votedOnTraits[i-1].voteType = 'down'
+                      user.save((err, savedUser) => {
+                        if (err) {
+                          console.log(err)
+                        } else {
+                          console.log(savedUser)
+                        }
+                      })
+                    }
+                  })
+                } else {
+                  console.log('no go')
+                }
+              }
             }
 
           // User has never voted on this trait before, create new voteKeeper and add to Users list of voted on traits
           } else {
 
             // Method for creatings and adding voteKeeper objects to User, temporary until VoteKeeper controller is implemented.
-            var newVoteKeeper = { traitId, voteType }
-            VoteKeeper.create(newVoteKeeper, (err, voteKeeper) => {
-              if (err) {
-                console.log(err)
-              } else {
-                foundUser.votedOnTraits.push(voteKeeper)
-                foundUser.save()
-                return next()
-              }
-            })
+            console.log(foundUser.votedOnTraits)
+            foundUser.votedOnTraits.push({ trait: traitId, voteType: voteType })
+            foundUser.save()
+            return next()
           }
         })
         .catch((err) => {
@@ -65,7 +73,7 @@ module.exports = votingMiddleware
 
 function userVotedOnTrait(array, item) {
   for(var i = 0; i < array.length; i++) {
-      if (array[i].traitId === item) return array[i]
+      if (array[i].trait == item) return array[i]
   }
   return -1
 }

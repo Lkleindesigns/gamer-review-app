@@ -1,12 +1,15 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 var passportLocalMongoose = require('passport-local-mongoose')
 
 var VoteKeeperSchema = new mongoose.Schema({
-  traitId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Trait"
-  },
-  voteType: String
+  name: String,
+  trait: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    voteType: String
+  }
 })
 
 VoteKeeperSchema.plugin(passportLocalMongoose)
