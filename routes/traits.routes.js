@@ -20,6 +20,6 @@ router
 
 router
   .route('/:traitId/downvote')
-    .put(authMiddleware.isLoggedIn, traitsController.downvote)
+    .put(votingMiddleware.checkForVoteEligibility, traitsController.downvote)
 
 module.exports = router

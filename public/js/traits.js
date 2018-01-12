@@ -44,7 +44,8 @@ function upvoteTrait(trait) {
     var putUrl = '/api/traits/' + traitId + '/upvote'
     $.ajax({
       method: 'PUT',
-      url: putUrl
+      url: putUrl,
+      data: { voteType: "up" }
     })
     .then((data) => {
       console.log('Success')
@@ -65,13 +66,16 @@ function downvoteTrait(trait) {
     $.ajax({
       method: 'PUT',
       url: putUrl,
-      success: function(data) {
-        replaceEle = $('div').find(trait.children('.downScore'))
-        $(replaceEle).replaceWith('<div class="downScore" style="display: inline;">' + data.downvoteScore  + '</div>')
-      },
-      error: function(err) {
-        console.log("FAIL!")
-      }
+      data: { voteType: "down" }
+    })
+    .then((data) => {
+      console.log('Success')
+      replaceEle = $('div').find(trait.children('.downScore'))
+      $(replaceEle).replaceWith('<div class="downScore" style="display: inline;">' + data.downvoteScore  + '</div>')
+    })
+    .catch((err) => {
+      console.log(err.responseJSON.error)
+      fadeMessage(err)
     })
   })
 }

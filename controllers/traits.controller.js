@@ -55,7 +55,6 @@ module.exports = {
         res.json(trait)
       })
       .catch((err) => {
-        console.log('MOOO')
         res.send(err)
       })
   },

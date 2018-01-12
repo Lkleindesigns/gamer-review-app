@@ -6,8 +6,11 @@ var UserSchema = new mongoose.Schema({
   password: String,
   votedOnTraits: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Trait"
+      trait: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Trait"
+      },
+      voteType: String
     }
   ]
 })
