@@ -12,7 +12,7 @@ var UserSchema = new mongoose.Schema({
       },
       voteType: String
     }
-    ]
+  ]
 })
 
 UserSchema.plugin(passportLocalMongoose)

@@ -27,20 +27,63 @@ var votingMiddleware = {
 
               // switch voteType and proceed proceed with voting
               for (var i = 0; i <  foundUser.votedOnTraits.length; i++) {
-                if ( foundUser.votedOnTraits[i]._id == votedOnTrait._id) {
+                if (foundUser.votedOnTraits[i]._id == votedOnTrait._id) {
+
+                  /*
+                    Maybe try this whole thing the other way around:
+                    Find the trait first, based off of the votedOntrait.Id
+                    then open up the user and end with changing the vote type
+                  */
+
+                  // Possible move this endpoint to it's own route
                   User.findById(foundUser._id, (err, user) => {
                     if (err) {
                       console.log(err)
                     } else {
-                      user.votedOnTraits[i-1].voteType = 'down'
-                      user.save((err, savedUser) => {
-                        if (err) {
-                          console.log(err)
-                        } else {
-                          console.log(savedUser)
-                        }
-                      })
+                      if (user.votedOnTraits[i-1].voteType == 'up') {
+                        user.votedOnTraits[i-1].voteType = 'down'
+
+                        // Take away the vote from Upvote
+                        Trait
+                        .findOneAndUpdate({_id: user.votedOnTraits[i-1].trait}, {
+                          $inc: { upvoteScore: -1 },
+                          $inc: { downvoteScore: 1 }
+                        }, {new: true}, (err, updatedTrait) => {
+                          if (err) {
+                            console.log(err)
+                          } else {
+                            updatedTrait.save()
+                            user.save()
+                          }
+                        })
+                      } else if (user.votedOnTraits[i-1].voteType == 'down') {
+                        user.votedOnTraits[i-1].voteType = 'up'
+                        // Take away the vote from Downvote
+                        Trait
+                        .findOneAndUpdate({_id: user.votedOnTraits[i-1].trait}, {
+                          $inc: { downvoteScore: -1 },
+                          $inc: { upvoteScore: 1 }
+                        }, {new: true}, (err, updatedTrait) => {
+                          if (err) {
+                            console.log(err)
+                          } else {
+                            updatedTrait.save()
+                            user.save()
+                          }
+                        })
+                      }
                     }
+                  })
+                  .then((user) => {
+                    console.log('Ayo, show ya de wey')
+                    console.log(user.votedOnTraits[i-1].trait)
+                    Trait.findById(user.votedOnTraits[i-1].trait)
+                      .then((trait) => {
+                        res.json(trait)
+                      })
+                  })
+                  .catch((err) => {
+                    console.log(err)
                   })
                 } else {
                   console.log('no go')
